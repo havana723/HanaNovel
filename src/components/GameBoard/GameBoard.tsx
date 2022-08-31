@@ -190,7 +190,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   useEffect(() => {
     changeScript(script.get(props.startScene) ?? null);
     console.log(script);
-  }, [script, props.startScene]);
+  }, [script, props.startScene, changeScript]);
 
   const handleKeyboard = useCallback(
     (e: KeyboardEvent) => {
