@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "EarlyFontDiary";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_220508@1.0/EarlyFontDiary.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body,
+html {
+  font-family: "EarlyFontDiary", sans-serif;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+div#root {
+  font-family: "EarlyFontDiary", sans-serif;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
