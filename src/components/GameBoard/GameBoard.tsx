@@ -214,7 +214,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
           <img
             src={background}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            alt="background"
+            alt={background}
           />
         ) : null}
         <CharacterFlex>
@@ -288,7 +288,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
           <ReStartFlex>
             <SelectButton
               text={'다시 시작하기'}
-              onClick={() => changeScript(script.get('chapter1') ?? null)}
+              onClick={() => changeScript(script.get(props.startScene) ?? null)}
             />
           </ReStartFlex>
         ) : null}

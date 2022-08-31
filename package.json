@@ -12,11 +12,21 @@
   },
   "author": "",
   "license": "ISC",
+  "peerDependencies": {
+    "@emotion/react": ">=11",
+    "@emotion/styled": ">=11",
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
   "devDependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.4.0",
-    "@types/react": "^18.0.18",
+    "@types/node": "^18.7.14",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "eslint": "^8.23.0",
@@ -27,14 +37,13 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
     "rollup": "^2.79.0",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-dts": "^4.2.2",
+    "tslib": "^2.4.0",
     "typescript": "~4.7.4"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "tslib": "^2.4.0"
   },
   "files": [
     "dist"
