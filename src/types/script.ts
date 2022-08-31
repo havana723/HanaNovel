@@ -1,4 +1,4 @@
-export type SceneState = "text" | "black" | "centerBlack" | "select" | null;
+export type SceneState = 'text' | 'black' | 'centerBlack' | 'select' | null;
 
 export interface Scene {
   text: string;
@@ -6,7 +6,7 @@ export interface Scene {
   sceneState?: SceneState;
   character?: string;
   characterImg?: string[];
-  isSelect?: "on" | "off";
+  isSelect?: boolean;
   selectList?: string[];
   background?: string;
   end?: boolean;

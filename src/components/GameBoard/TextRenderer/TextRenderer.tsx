@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 const TextRenderer: React.FC<{ text: string }> = (props) => {
-  const split = props.text.split("\n");
+  const split = props.text.split('\n');
   return (
     <>
       {split.map((s, i) => (

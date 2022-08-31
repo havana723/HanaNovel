@@ -1,11 +1,12 @@
-import styled from "@emotion/styled";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Scene, SceneState, Script } from "../../types";
-import { SelectButton } from "./SelectButton";
-import { TextRenderer } from "./TextRenderer";
+import styled from '@emotion/styled';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Scene, SceneState, Script } from '../../types';
+import { SelectButton } from './SelectButton';
+import { TextRenderer } from './TextRenderer';
 
 interface GameBoardProps {
   script: Script;
+  startScene: string;
 }
 
 const GameboardContainer = styled.div`
@@ -158,7 +159,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
   const [end, setEnd] = useState<boolean>(false);
 
-  function changeScript(nextScript: Scene | null) {
+  const changeScript = (nextScript: Scene | null) => {
     console.log(nextScript);
 
     if (!nextScript) return;
@@ -169,8 +170,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
     setCharacter(nextScript.character ?? null);
     setCharacterImg(nextScript.characterImg ?? null);
 
-    if (nextScript.isSelect === "on") setIsSelect(true);
-    if (nextScript.isSelect === "off") setIsSelect(false);
+    setIsSelect(nextScript.isSelect ? nextScript.isSelect : false);
     setSelectList(nextScript.selectList ?? null);
 
     if (nextScript.background) setBackground(nextScript.background);
@@ -179,7 +179,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
     else setEnd(false);
 
     setNext(nextScript.next ?? null);
-  }
+  };
 
   const script = useMemo(() => {
     const script = new Map<string, Scene>();
@@ -187,19 +187,24 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
     return script;
   }, [props.script]);
 
+  useEffect(() => {
+    changeScript(script.get(props.startScene) ?? null);
+    console.log(script);
+  }, [script, changeScript]);
+
   const handleKeyboard = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === "Enter" || e.key === "ArrowRight") {
+      if (e.key === 'Enter' || e.key === 'ArrowRight') {
         if (isSelect) return;
-        changeScript(script.get(next ? next[0] : "") ?? null);
+        changeScript(script.get(next ? next[0] : '') ?? null);
       }
     },
-    [next, isSelect]
+    [next, isSelect, changeScript]
   );
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyboard);
-    return () => document.removeEventListener("keydown", handleKeyboard);
+    document.addEventListener('keydown', handleKeyboard);
+    return () => document.removeEventListener('keydown', handleKeyboard);
   }, [handleKeyboard]);
 
   return (
@@ -208,7 +213,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
         {background ? (
           <img
             src={background}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             alt="background"
           />
         ) : null}
@@ -219,9 +224,9 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
                   <img
                     src={c}
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
                     }}
                     alt={c}
                   />
@@ -230,10 +235,10 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
           </CharacterContainter>
         </CharacterFlex>
         <TextBoxContainer
-          onClick={() => changeScript(script.get(next ? next[0] : "") ?? null)}
+          onClick={() => changeScript(script.get(next ? next[0] : '') ?? null)}
         >
           <TextBox>
-            <TextRenderer text={text ?? ""} />
+            <TextRenderer text={text ?? ''} />
           </TextBox>
         </TextBoxContainer>
         {character ? (
@@ -241,25 +246,25 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
             <span>{character}</span>
           </CharacterNameContainer>
         ) : null}
-        {sceneState === "black" ? (
+        {sceneState === 'black' ? (
           <BlackContainer
             onClick={() =>
-              changeScript(script.get(next ? next[0] : "") ?? null)
+              changeScript(script.get(next ? next[0] : '') ?? null)
             }
           >
             <BlackTextBox>
-              <TextRenderer text={text ?? ""} />
+              <TextRenderer text={text ?? ''} />
             </BlackTextBox>
           </BlackContainer>
         ) : null}
-        {sceneState === "centerBlack" ? (
+        {sceneState === 'centerBlack' ? (
           <BlackCenterContainer
             onClick={() =>
-              changeScript(script.get(next ? next[0] : "") ?? null)
+              changeScript(script.get(next ? next[0] : '') ?? null)
             }
           >
             <BlackCenterTextBox>
-              <TextRenderer text={text ?? ""} />
+              <TextRenderer text={text ?? ''} />
             </BlackCenterTextBox>
           </BlackCenterContainer>
         ) : null}
@@ -271,7 +276,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
                     text={s}
                     key={s}
                     onClick={() =>
-                      changeScript(script.get(next ? next[i] : "") ?? null)
+                      changeScript(script.get(next ? next[i] : '') ?? null)
                     }
                   />
                 ))
@@ -281,8 +286,8 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
         {end ? (
           <ReStartFlex>
             <SelectButton
-              text={"다시 시작하기"}
-              onClick={() => changeScript(script.get("chapter1") ?? null)}
+              text={'다시 시작하기'}
+              onClick={() => changeScript(script.get('chapter1') ?? null)}
             />
           </ReStartFlex>
         ) : null}

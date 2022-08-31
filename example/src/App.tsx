@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
+import { Gameboard } from "hana-novel";
 import "./App.css";
-import Gameboard from "./Gameboard";
+import { script } from "./script/script";
 
 const Background = styled.div`
   height: 100%;
@@ -16,7 +17,7 @@ const Background = styled.div`
 function App() {
   return (
     <Background>
-      <Gameboard />
+      <Gameboard script={script} startScene="start" />
     </Background>
   );
 }

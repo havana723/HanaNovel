@@ -1,1 +1,1 @@
-export { default as TextRenderer } from "./TextRenderer";
+export { default as TextRenderer } from './TextRenderer';
