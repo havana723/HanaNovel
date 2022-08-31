@@ -31,7 +31,7 @@ const TextBox: React.FC<TextBoxProps> = (props) => {
   const { text, onClick } = props;
 
   return (
-    <TextBoxContainer onClick={() => onClick}>
+    <TextBoxContainer onClick={onClick}>
       <TextBoxContainerContainer>
         <TextRenderer text={text ?? ''} />
       </TextBoxContainerContainer>

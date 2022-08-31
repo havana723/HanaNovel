@@ -1,14 +1,16 @@
 export type SceneState = 'text' | 'black' | 'centerBlack' | 'select' | null;
+export interface ISelection {
+  text: string;
+  next: string;
+}
 
 export interface Scene {
-  text: string;
+  text: string | string[];
   sceneState?: SceneState;
-  character?: string;
+  character?: string | null;
   characterImg?: string[];
-  isSelect?: boolean;
-  selectList?: string[];
   background?: string;
-  next: string[] | null;
+  next: string | ISelection[] | null;
 }
 
 export type Episode = [string, Scene][];

@@ -28,8 +28,8 @@ const CharacterImg: React.FC<CharacterImgProps> = (props) => {
   return (
     <CharacterFlex>
       {characterImg
-        ? characterImg.map((c) => (
-            <CharacterContainter key={c}>
+        ? characterImg.map((c, i) => (
+            <CharacterContainter key={c + i}>
               <img
                 src={c}
                 style={{

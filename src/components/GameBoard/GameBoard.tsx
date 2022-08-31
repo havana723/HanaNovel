@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Scene, SceneState, Script } from '../../types';
+import { ISelection, Scene, SceneState, Script } from '../../types';
 import CharacterImg from './CharacterImg/CharacterImg';
 import { SelectButton } from './SelectButton';
 import { TextBox } from './TextBox';
@@ -118,37 +118,51 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   const [sceneState, setSceneState] = useState<SceneState>(null);
 
   const [text, setText] = useState<string | null>(null);
+  const [textArray, setTextArray] = useState<string[] | null>(null);
+  const [textIndex, setTextIndex] = useState<number>(0);
+
   const [character, setCharacter] = useState<string | null>(null);
   const [characterImg, setCharacterImg] = useState<string[] | null>(null);
 
-  const [isSelect, setIsSelect] = useState<boolean>(false);
-  const [selectList, setSelectList] = useState<string[] | null>(null);
+  const [selectList, setSelectList] = useState<ISelection[] | null>(null);
 
-  const [next, setNext] = useState<string[] | null>(null);
+  const [next, setNext] = useState<string | null>(null);
 
   const [background, setBackground] = useState<string | null>(null);
 
   const end = next === null;
+  const isSelect = Array.isArray(selectList) && selectList.length >= 1;
 
-  const changeScript = useCallback((nextScript: Scene | null) => {
-    if (!nextScript) return;
+  const changeScript = useCallback(
+    (nextScript: Scene | null) => {
+      if (!nextScript) return;
 
-    setText(nextScript.text);
+      const nextArray =
+        typeof nextScript.text === 'string'
+          ? [nextScript.text]
+          : nextScript.text;
+      setText(nextArray[0]);
+      setTextArray(nextArray);
+      setTextIndex((prev) => prev + 1);
 
-    if (nextScript.sceneState !== undefined)
-      setSceneState(nextScript.sceneState);
-    if (nextScript.character !== undefined) setCharacter(nextScript.character);
-    if (nextScript.characterImg !== undefined)
-      setCharacterImg(nextScript.characterImg);
+      if (nextScript.sceneState !== undefined)
+        setSceneState(nextScript.sceneState);
+      if (nextScript.character !== undefined)
+        setCharacter(nextScript.character);
+      if (nextScript.characterImg !== undefined)
+        setCharacterImg(nextScript.characterImg);
 
-    setIsSelect(nextScript.isSelect ? nextScript.isSelect : false);
-    setSelectList(nextScript.selectList ?? null);
+      if (nextScript.background !== undefined)
+        setBackground(nextScript.background);
 
-    if (nextScript.background !== undefined)
-      setBackground(nextScript.background);
-
-    setNext(nextScript.next ?? null);
-  }, []);
+      if (Array.isArray(nextScript.next)) setSelectList(nextScript.next);
+      else {
+        setNext(nextScript.next);
+        setSelectList(null);
+      }
+    },
+    [textArray, textIndex]
+  );
 
   const script = useMemo(() => {
     const script = new Map<string, Scene>();
@@ -158,14 +172,13 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
   useEffect(() => {
     changeScript(script.get(props.startScene) ?? null);
-    console.log(script);
   }, [script, props.startScene, changeScript]);
 
   const handleKeyboard = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Enter' || e.key === 'ArrowRight') {
         if (isSelect) return;
-        changeScript(script.get(next ? next[0] : '') ?? null);
+        changeScript(script.get(next ?? '') ?? null);
       }
     },
     [next, isSelect, changeScript, script]
@@ -189,7 +202,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
         <CharacterImg characterImg={characterImg} />
         <TextBox
           text={text}
-          onClick={() => changeScript(script.get(next ? next[0] : '') ?? null)}
+          onClick={() => changeScript(script.get(next ?? '') ?? null)}
         />
         {character ? (
           <CharacterNameContainer>
@@ -198,9 +211,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
         ) : null}
         {sceneState === 'black' ? (
           <BlackContainer
-            onClick={() =>
-              changeScript(script.get(next ? next[0] : '') ?? null)
-            }
+            onClick={() => changeScript(script.get(next ?? '') ?? null)}
           >
             <BlackTextBox>
               <TextRenderer text={text ?? ''} />
@@ -209,9 +220,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
         ) : null}
         {sceneState === 'centerBlack' ? (
           <BlackCenterContainer
-            onClick={() =>
-              changeScript(script.get(next ? next[0] : '') ?? null)
-            }
+            onClick={() => changeScript(script.get(next ?? '') ?? null)}
           >
             <BlackCenterTextBox>
               <TextRenderer text={text ?? ''} />
@@ -223,11 +232,9 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
             {selectList
               ? selectList.map((s, i) => (
                   <SelectButton
-                    text={s}
-                    key={s}
-                    onClick={() =>
-                      changeScript(script.get(next ? next[i] : '') ?? null)
-                    }
+                    text={s.text}
+                    key={s.text + i}
+                    onClick={() => changeScript(script.get(s.next) ?? null)}
                   />
                 ))
               : null}
