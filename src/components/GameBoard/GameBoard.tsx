@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Scene, SceneState, Script } from '../../types';
+import CharacterImg from './CharacterImg/CharacterImg';
 import { SelectButton } from './SelectButton';
+import { TextBox } from './TextBox';
 import { TextRenderer } from './TextRenderer';
 
 interface GameBoardProps {
@@ -31,17 +33,6 @@ const BackgroundContainer = styled.div`
   overflow: hidden;
 `;
 
-const CharacterFlex = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const CharacterContainter = styled.div`
-  height: 130%;
-  position: absolute;
-  bottom: -40%;
-`;
-
 const ReStartFlex = styled.div`
   position: absolute;
   bottom: -20%;
@@ -51,26 +42,6 @@ const ReStartFlex = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-
-const TextBoxContainer = styled.div`
-  width: 90%;
-  height: 30%;
-  background-color: #000000c3;
-  border-radius: 5px;
-  position: absolute;
-  left: 5%;
-  bottom: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TextBox = styled.div`
-  width: 95%;
-  height: 75%;
-  color: white;
-  font-size: 3vmin;
 `;
 
 const CharacterNameContainer = styled.div`
@@ -157,26 +128,24 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
   const [background, setBackground] = useState<string | null>(null);
 
-  const [end, setEnd] = useState<boolean>(false);
+  const end = next === null;
 
   const changeScript = useCallback((nextScript: Scene | null) => {
-    console.log(nextScript);
-
     if (!nextScript) return;
 
-    if (nextScript.sceneState) setSceneState(nextScript.sceneState);
-
     setText(nextScript.text);
-    setCharacter(nextScript.character ?? null);
-    setCharacterImg(nextScript.characterImg ?? null);
+
+    if (nextScript.sceneState !== undefined)
+      setSceneState(nextScript.sceneState);
+    if (nextScript.character !== undefined) setCharacter(nextScript.character);
+    if (nextScript.characterImg !== undefined)
+      setCharacterImg(nextScript.characterImg);
 
     setIsSelect(nextScript.isSelect ? nextScript.isSelect : false);
     setSelectList(nextScript.selectList ?? null);
 
-    if (nextScript.background) setBackground(nextScript.background);
-
-    if (nextScript.end) setEnd(true);
-    else setEnd(false);
+    if (nextScript.background !== undefined)
+      setBackground(nextScript.background);
 
     setNext(nextScript.next ?? null);
   }, []);
@@ -217,31 +186,11 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
             alt={background}
           />
         ) : null}
-        <CharacterFlex>
-          <CharacterContainter>
-            {characterImg
-              ? characterImg.map((c) => (
-                  <img
-                    src={c}
-                    key={c}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                    }}
-                    alt={c}
-                  />
-                ))
-              : null}
-          </CharacterContainter>
-        </CharacterFlex>
-        <TextBoxContainer
+        <CharacterImg characterImg={characterImg} />
+        <TextBox
+          text={text}
           onClick={() => changeScript(script.get(next ? next[0] : '') ?? null)}
-        >
-          <TextBox>
-            <TextRenderer text={text ?? ''} />
-          </TextBox>
-        </TextBoxContainer>
+        />
         {character ? (
           <CharacterNameContainer>
             <span>{character}</span>
