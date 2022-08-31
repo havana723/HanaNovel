@@ -159,7 +159,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
   const [end, setEnd] = useState<boolean>(false);
 
-  const changeScript = (nextScript: Scene | null) => {
+  const changeScript = useCallback((nextScript: Scene | null) => {
     console.log(nextScript);
 
     if (!nextScript) return;
@@ -179,7 +179,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
     else setEnd(false);
 
     setNext(nextScript.next ?? null);
-  };
+  }, []);
 
   const script = useMemo(() => {
     const script = new Map<string, Scene>();
@@ -190,7 +190,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   useEffect(() => {
     changeScript(script.get(props.startScene) ?? null);
     console.log(script);
-  }, [script, changeScript]);
+  }, [script, props.startScene]);
 
   const handleKeyboard = useCallback(
     (e: KeyboardEvent) => {
@@ -199,7 +199,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
         changeScript(script.get(next ? next[0] : '') ?? null);
       }
     },
-    [next, isSelect, changeScript]
+    [next, isSelect, changeScript, script]
   );
 
   useEffect(() => {
@@ -223,6 +223,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
               ? characterImg.map((c) => (
                   <img
                     src={c}
+                    key={c}
                     style={{
                       width: '100%',
                       height: '100%',
