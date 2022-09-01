@@ -1,4 +1,4 @@
-export type SceneState = 'text' | 'black' | 'centerBlack' | 'select' | null;
+export type SceneState = 'default' | 'black' | 'centerBlack' | 'select' | null;
 export interface ISelection {
   text: string;
   next: string;

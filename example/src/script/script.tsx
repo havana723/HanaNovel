@@ -23,7 +23,7 @@ export const episode1: Episode = [
     'chapter1-100',
     {
       text: '으아~ 잘 쉬었다.',
-      sceneState: 'text',
+      sceneState: 'default',
       character: '한별',
       characterImg: [hanbyeol],
       background: backgroundHotel,
@@ -97,7 +97,7 @@ export const episode1: Episode = [
       text: '어떻게 하지?',
       character: null,
       characterImg: [hanbyeol, hanbyeol1, hanbyeol1, hanbyeol1],
-      sceneState: 'text',
+      sceneState: 'default',
       next: 'chapter1-1000',
     },
   ],

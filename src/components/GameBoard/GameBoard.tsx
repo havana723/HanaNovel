@@ -1,12 +1,11 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ISelection, Scene, SceneState, Script } from '../../types';
-import BlackScene from './BlackScene/BlackScene';
-import CharacterImg from './CharacterImg/CharacterImg';
-import { CharacterName } from './CharacterName';
 import { ReStart } from './ReStart';
-import { SelectScene } from './SelectScene';
-import { TextBox } from './TextBox';
+import { BlackScene } from './Scene/BlackScene';
+import { CenterBlackScene } from './Scene/CenterBlackScene';
+import { SelectScene } from './Scene/SelectScene';
+import { TextScene } from './Scene/TextScene';
 
 interface GameBoardProps {
   script: Script;
@@ -109,30 +108,34 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   return (
     <GameboardContainer>
       <BackgroundContainer>
-        {background ? (
-          <img
-            src={background}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            alt={background}
+        {sceneState === 'default' ? (
+          <TextScene
+            background={background}
+            text={text}
+            character={character}
+            characterImg={characterImg}
+            onClick={() => changeScript(script.get(next ?? '') ?? null)}
           />
         ) : null}
-        <CharacterImg characterImg={characterImg} />
-        <TextBox
-          text={text}
-          onClick={() => changeScript(script.get(next ?? '') ?? null)}
-        />
-        <CharacterName character={character} />
-        <BlackScene
-          text={text}
-          sceneState={sceneState}
-          onClick={() => changeScript(script.get(next ?? '') ?? null)}
-        />
-        <SelectScene
-          isSelect={isSelect}
-          selectList={selectList}
-          script={script}
-          changeScript={changeScript}
-        />
+        {sceneState === 'black' ? (
+          <BlackScene
+            text={text}
+            onClick={() => changeScript(script.get(next ?? '') ?? null)}
+          />
+        ) : null}
+        {sceneState === 'centerBlack' ? (
+          <CenterBlackScene
+            text={text}
+            onClick={() => changeScript(script.get(next ?? '') ?? null)}
+          />
+        ) : null}
+        {isSelect ? (
+          <SelectScene
+            selectList={selectList}
+            script={script}
+            changeScript={changeScript}
+          />
+        ) : null}
         {end ? (
           <ReStart
             text="다시 시작하기"

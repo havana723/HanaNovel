@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { TextRenderer } from '../TextRenderer';
+import { TextRenderer } from '../../../TextRenderer';
 
 interface TextBoxProps {
   text: string | null;
@@ -10,7 +10,7 @@ interface TextBoxProps {
 const TextBoxContainer = styled.div`
   width: 90%;
   height: 30%;
-  background-color: #000000c3;
+  background-color: rgba(0, 0, 0, 0.765);
   border-radius: 5px;
   position: absolute;
   left: 5%;

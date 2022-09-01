@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { ISelection, Scene } from '../../../types';
-import { SelectButton } from '../SelectButton';
+import { ISelection, Scene } from '../../../../types';
+import { SelectButton } from './SelectButton';
 
 interface SelectSceneProps {
-  isSelect: boolean;
   selectList: ISelection[] | null;
   script: Map<string, Scene>;
   changeScript: (script: Scene | null) => void;
@@ -26,23 +25,21 @@ const SelectContainer = styled.div`
 `;
 
 const SelectScene: React.FC<SelectSceneProps> = (props) => {
-  const { isSelect, selectList, changeScript, script } = props;
+  const { selectList, changeScript, script } = props;
 
   return (
     <>
-      {isSelect ? (
-        <SelectContainer>
-          {selectList
-            ? selectList.map((s, i) => (
-                <SelectButton
-                  text={s.text}
-                  key={s.text + i}
-                  onClick={() => changeScript(script.get(s.next) ?? null)}
-                />
-              ))
-            : null}
-        </SelectContainer>
-      ) : null}
+      <SelectContainer>
+        {selectList
+          ? selectList.map((s, i) => (
+              <SelectButton
+                text={s.text}
+                key={s.text + i}
+                onClick={() => changeScript(script.get(s.next) ?? null)}
+              />
+            ))
+          : null}
+      </SelectContainer>
     </>
   );
 };
