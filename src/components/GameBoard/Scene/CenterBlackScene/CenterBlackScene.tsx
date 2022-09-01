@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { TextRenderer } from '../../TextRenderer';
+import { TextRenderer } from '../../../TextRenderer';
 
 interface GameSceneProps {
   text: string | null;
