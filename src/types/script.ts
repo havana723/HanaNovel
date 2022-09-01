@@ -5,7 +5,8 @@ export interface ISelection {
 }
 
 export interface Scene {
-  text: string | string[];
+  text: string;
+  addText?: boolean;
   sceneState?: SceneState;
   character?: string | null;
   characterImg?: string[];

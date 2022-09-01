@@ -118,8 +118,6 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   const [sceneState, setSceneState] = useState<SceneState>(null);
 
   const [text, setText] = useState<string | null>(null);
-  const [textArray, setTextArray] = useState<string[] | null>(null);
-  const [textIndex, setTextIndex] = useState<number>(0);
 
   const [character, setCharacter] = useState<string | null>(null);
   const [characterImg, setCharacterImg] = useState<string[] | null>(null);
@@ -133,40 +131,38 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   const end = next === null;
   const isSelect = Array.isArray(selectList) && selectList.length >= 1;
 
-  const changeScript = useCallback(
-    (nextScript: Scene | null) => {
-      if (!nextScript) return;
+  const changeScript = useCallback((nextScript: Scene | null) => {
+    if (!nextScript) return;
 
-      const nextArray =
-        typeof nextScript.text === 'string'
-          ? [nextScript.text]
-          : nextScript.text;
-      setText(nextArray[0]);
-      setTextArray(nextArray);
-      setTextIndex((prev) => prev + 1);
+    nextScript.addText
+      ? setText((prev) => prev + '\n' + nextScript.text)
+      : setText(nextScript.text);
 
-      if (nextScript.sceneState !== undefined)
-        setSceneState(nextScript.sceneState);
-      if (nextScript.character !== undefined)
-        setCharacter(nextScript.character);
-      if (nextScript.characterImg !== undefined)
-        setCharacterImg(nextScript.characterImg);
+    if (nextScript.sceneState !== undefined)
+      setSceneState(nextScript.sceneState);
+    if (nextScript.character !== undefined) setCharacter(nextScript.character);
+    if (nextScript.characterImg !== undefined)
+      setCharacterImg(nextScript.characterImg);
 
-      if (nextScript.background !== undefined)
-        setBackground(nextScript.background);
+    if (nextScript.background !== undefined)
+      setBackground(nextScript.background);
 
-      if (Array.isArray(nextScript.next)) setSelectList(nextScript.next);
-      else {
-        setNext(nextScript.next);
-        setSelectList(null);
-      }
-    },
-    [textArray, textIndex]
-  );
+    if (Array.isArray(nextScript.next)) setSelectList(nextScript.next);
+    else {
+      setNext(nextScript.next);
+      setSelectList(null);
+    }
+  }, []);
 
   const script = useMemo(() => {
     const script = new Map<string, Scene>();
-    props.script.forEach((e) => e.forEach(([n, s]) => script.set(n, s)));
+    props.script.forEach((e) =>
+      e.forEach(([n, s]) =>
+        Array.isArray(s.text)
+          ? s.text.forEach((text) => script.set(n, { ...s, text: text }))
+          : script.set(n, s)
+      )
+    );
     return script;
   }, [props.script]);
 

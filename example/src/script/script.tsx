@@ -69,7 +69,7 @@ export const episode1: Episode = [
   [
     'chapter1-600',
     {
-      text: '어지럽다.',
+      text: '어지럽다',
       sceneState: 'black',
       next: 'chapter1-700',
     },
@@ -77,15 +77,16 @@ export const episode1: Episode = [
   [
     'chapter1-700',
     {
-      text: '어지럽다. \n 한별이는 나인데? 왜 저기 세 명이나 있는 거지?',
-      sceneState: 'black',
+      text: '한별이는 나인데? 왜 저기 세 명이나 있는 거지?',
+      addText: true,
       next: 'chapter1-800',
     },
   ],
   [
     'chapter1-800',
     {
-      text: '어지럽다. \n 한별이는 나인데? 왜 저기 세 명이나 있는 거지? \n 도플갱어를 보다니 나는 죽을 운명인가보다.',
+      text: '도플갱어를 보다니 나는 죽을 운명인가보다.',
+      addText: true,
       sceneState: 'black',
       next: 'chapter1-900',
     },
@@ -120,13 +121,43 @@ export const episode1: Episode = [
   [
     'chapter1-sleep-200',
     {
-      text: [
-        `그렇게 호텔 침대에 누워 잠을 청한 한별이를 우리는 다시 만날 수 없었다.`,
-        `뒤늦게 객실을 찾아온 호텔 직원들은 아무도 없이 텅 빈 방을 발견했을 뿐이다.`,
-        `사라진 네 명의 한별이는 어떻게 된 것일까.`,
-        `진실은 아무도 모른다.`,
-        `그저 한별이가 다시 우리 곁으로 돌아올 날만을 기다릴 뿐...`,
-      ],
+      text: '그렇게 호텔 침대에 누워 잠을 청한 한별이를 우리는 다시 만날 수 없었다.',
+      sceneState: 'black',
+      next: 'chapter1-sleep-300',
+    },
+  ],
+  [
+    'chapter1-sleep-300',
+    {
+      text: '뒤늦게 객실을 찾아온 호텔 직원들은 아무도 없이 텅 빈 방을 발견했을 뿐이다.',
+      addText: true,
+      next: 'chapter1-sleep-400',
+    },
+  ],
+  [
+    'chapter1-sleep-400',
+    {
+      text: '사라진 네 명의 한별이는 어떻게 된 것일까.',
+      addText: true,
+      sceneState: 'black',
+      next: 'chapter1-sleep-500',
+    },
+  ],
+  [
+    'chapter1-sleep-500',
+    {
+      text: '진실은 아무도 모른다.',
+      addText: true,
+      sceneState: 'black',
+      next: 'chapter1-sleep-600',
+    },
+  ],
+  [
+    'chapter1-sleep-600',
+    {
+      text: '그저 한별이가 다시 우리 곁으로 돌아올 날만을 기다릴 뿐...',
+      addText: true,
+      sceneState: 'black',
       next: 'chapter1-sleep',
     },
   ],
