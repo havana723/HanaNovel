@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ISelection, Scene, SceneState, Script } from '../../types';
+import BlackScene from './BlackScene/BlackScene';
 import CharacterImg from './CharacterImg/CharacterImg';
-import { SelectButton } from './SelectButton';
+import { CharacterName } from './CharacterName';
+import { ReStart } from './ReStart';
+import { SelectScene } from './SelectScene';
 import { TextBox } from './TextBox';
-import { TextRenderer } from './TextRenderer';
 
 interface GameBoardProps {
   script: Script;
@@ -31,87 +33,6 @@ const BackgroundContainer = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
-`;
-
-const ReStartFlex = styled.div`
-  position: absolute;
-  bottom: -20%;
-  left: 25%;
-  height: 80%;
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CharacterNameContainer = styled.div`
-  width: 20%;
-  height: 7%;
-  background-color: #000000c3;
-  border-radius: 5px;
-  position: absolute;
-  left: 5%;
-  bottom: 35%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 3vmin;
-  color: white;
-`;
-
-const BlackContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  z-index: 50;
-`;
-
-const BlackTextBox = styled.div`
-  width: 90%;
-  height: 80%;
-  color: white;
-  font-size: 3vmin;
-`;
-
-const BlackCenterContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  z-index: 100;
-`;
-
-const BlackCenterTextBox = styled.div`
-  width: 90%;
-  color: white;
-  font-size: 5vmin;
-  text-align: center;
-`;
-
-const SelectContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #000000c3;
-  z-index: 150;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  justify-content: space-evenly;
 `;
 
 const Gameboard: React.FC<GameBoardProps> = (props) => {
@@ -200,49 +121,25 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
           text={text}
           onClick={() => changeScript(script.get(next ?? '') ?? null)}
         />
-        {character ? (
-          <CharacterNameContainer>
-            <span>{character}</span>
-          </CharacterNameContainer>
-        ) : null}
-        {sceneState === 'black' ? (
-          <BlackContainer
-            onClick={() => changeScript(script.get(next ?? '') ?? null)}
-          >
-            <BlackTextBox>
-              <TextRenderer text={text ?? ''} />
-            </BlackTextBox>
-          </BlackContainer>
-        ) : null}
-        {sceneState === 'centerBlack' ? (
-          <BlackCenterContainer
-            onClick={() => changeScript(script.get(next ?? '') ?? null)}
-          >
-            <BlackCenterTextBox>
-              <TextRenderer text={text ?? ''} />
-            </BlackCenterTextBox>
-          </BlackCenterContainer>
-        ) : null}
-        {isSelect ? (
-          <SelectContainer>
-            {selectList
-              ? selectList.map((s, i) => (
-                  <SelectButton
-                    text={s.text}
-                    key={s.text + i}
-                    onClick={() => changeScript(script.get(s.next) ?? null)}
-                  />
-                ))
-              : null}
-          </SelectContainer>
-        ) : null}
+        <CharacterName character={character} />
+        <BlackScene
+          text={text}
+          sceneState={sceneState}
+          onClick={() => changeScript(script.get(next ?? '') ?? null)}
+        />
+        <SelectScene
+          isSelect={isSelect}
+          selectList={selectList}
+          script={script}
+          changeScript={changeScript}
+        />
         {end ? (
-          <ReStartFlex>
-            <SelectButton
-              text={'다시 시작하기'}
-              onClick={() => changeScript(script.get(props.startScene) ?? null)}
-            />
-          </ReStartFlex>
+          <ReStart
+            text="다시 시작하기"
+            onClick={() =>
+              changeScript(script.get(props.startScene ?? '') ?? null)
+            }
+          />
         ) : null}
       </BackgroundContainer>
     </GameboardContainer>
