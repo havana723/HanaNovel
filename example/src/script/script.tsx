@@ -34,7 +34,6 @@ export const episode1: Episode = [
     'chapter1-200',
     {
       text: '앗?! 저게 뭐지?',
-      character: '한별',
       characterImg: [hanbyeol],
       next: 'chapter1-300',
     },
@@ -165,6 +164,185 @@ export const episode1: Episode = [
     'chapter1-sleep',
     {
       text: 'BAD END ~바람과 함께 사라지다~',
+      sceneState: 'centerBlack',
+      next: null,
+    },
+  ],
+  [
+    'chapter1-love-100',
+    {
+      text: '에라 모르겠다.',
+      characterImg: [hanbyeol],
+      next: 'chapter1-love-200',
+    },
+  ],
+  [
+    'chapter1-love-200',
+    {
+      text: '저, 전부터 널 좋아했어.',
+      character: '한별',
+      characterImg: [hanbyeol],
+      next: 'chapter1-love-300',
+    },
+  ],
+  [
+    'chapter1-love-300',
+    {
+      text: '나랑 사귀어줘!',
+      next: 'chapter1-love-400',
+    },
+  ],
+  [
+    'chapter1-love-400',
+    {
+      text: '?',
+      character: '한별A',
+      characterImg: [hanbyeol1, '', ''],
+      next: 'chapter1-love-500',
+    },
+  ],
+  [
+    'chapter1-love-500',
+    {
+      text: '??',
+      character: '한별B',
+      characterImg: ['', hanbyeol1, ''],
+      next: 'chapter1-love-600',
+    },
+  ],
+  [
+    'chapter1-love-600',
+    {
+      text: '???',
+      character: '한별C',
+      characterImg: ['', '', hanbyeol1],
+      next: 'chapter1-love-700',
+    },
+  ],
+  [
+    'chapter1-love-700',
+    {
+      text: '????????????????????????????',
+      character: '한별ABC',
+      characterImg: [hanbyeol1, hanbyeol1, hanbyeol1],
+      next: 'chapter1-love-800',
+    },
+  ],
+  [
+    'chapter1-love-800',
+    {
+      text: '정적이 흐른다.',
+      sceneState: 'black',
+      next: 'chapter1-love-900',
+    },
+  ],
+  [
+    'chapter1-love-900',
+    {
+      text: '역시 이건 너무 무리수였나?',
+      addText: true,
+      sceneState: 'black',
+      next: 'chapter1-love-1000',
+    },
+  ],
+  [
+    'chapter1-love-1000',
+    {
+      text: '빨리 아무 말이라도 해야... 어?',
+      addText: true,
+      sceneState: 'black',
+      next: 'chapter1-love-1100',
+    },
+  ],
+  [
+    'chapter1-love-1100',
+    {
+      text: '...사실 나도 전부터 널 좋아했어.',
+      sceneState: 'default',
+      character: '한별A',
+      characterImg: [hanbyeol1, '', ''],
+      next: 'chapter1-love-1200',
+    },
+  ],
+  [
+    'chapter1-love-1200',
+    {
+      text: '이상하게 들릴까봐 지금까지는 말하지 못했지만...',
+      character: '한별B',
+      characterImg: ['', hanbyeol1, ''],
+      next: 'chapter1-love-1300',
+    },
+  ],
+  [
+    'chapter1-love-1300',
+    {
+      text: '나도 널 좋아해...!',
+      character: '한별C',
+      characterImg: ['', '', hanbyeol1],
+      next: 'chapter1-love-1400',
+    },
+  ],
+  [
+    'chapter1-love-1400',
+    {
+      text: '우리 사귀자!',
+      character: '한별ABC',
+      characterImg: [hanbyeol1, hanbyeol1, hanbyeol1],
+      next: 'chapter1-love-1500',
+    },
+  ],
+  [
+    'chapter1-love-1500',
+    {
+      text: '어...? 이게 어떻게 된 일이지?',
+      characterImg: [hanbyeol],
+      next: 'chapter1-love-1600',
+    },
+  ],
+  [
+    'chapter1-love-1600',
+    {
+      text: '아니 애초에, 내가 나랑 사귈 수 있는 건가?',
+      characterImg: [hanbyeol],
+      next: 'chapter1-love-1700',
+    },
+  ],
+  [
+    'chapter1-love-1700',
+    {
+      text: '나는 나랑... 연애하는 거야...?',
+      characterImg: [hanbyeol],
+      next: 'chapter1-love-1800',
+    },
+  ],
+  [
+    'chapter1-love-1800',
+    {
+      text: '한별이의 무수한 의문이 무색하게도 한별이가 한별이와 사귀는 것에는 아무런 문제도 없었다.',
+      sceneState: 'black',
+      next: 'chapter1-love-1900',
+    },
+  ],
+  [
+    'chapter1-love-1900',
+    {
+      text: '스스로를 가장 잘 아는 건 그 자신이라고 했던가, 한별이는 단 한 번의 싸움도 없이 평화롭고, 안정적이고, 그리고 누구보다도 행복한 연애를 지속해나갔다.',
+      addText: true,
+      next: 'chapter1-love-2000',
+    },
+  ],
+  [
+    'chapter1-love-2000',
+    {
+      text: '그렇게 오랜 연애 끝에 한별이는 사랑의 결실을 맺게 되었고 화창한 어느 4월의 봄날, 아름다운 신부가 되어 하객들을 맞이했다.',
+      addText: true,
+      next: 'chapter1-love',
+    },
+  ],
+  [
+    'chapter1-love',
+    {
+      text: 'HAPPY END ~4월의 신부~',
       sceneState: 'centerBlack',
       next: null,
     },
