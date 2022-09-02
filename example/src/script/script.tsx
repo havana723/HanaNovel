@@ -35,6 +35,7 @@ export const episode1: Episode = [
     {
       text: '앗?! 저게 뭐지?',
       characterImg: [hanbyeol],
+      animation: 'shakeX',
       next: 'chapter1-300',
     },
   ],
@@ -44,6 +45,7 @@ export const episode1: Episode = [
       text: '야생의',
       character: '한별A',
       characterImg: [hanbyeol1],
+      animation: 'shakeX',
       next: 'chapter1-400',
     },
   ],

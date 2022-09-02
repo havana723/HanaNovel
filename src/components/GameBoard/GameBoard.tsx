@@ -1,11 +1,14 @@
 import styled from '@emotion/styled';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ISelection, Scene, SceneState, Script } from '../../types';
+import {
+  AnimationState,
+  ISelection,
+  Scene,
+  SceneState,
+  Script,
+} from '../../types';
 import { ReStart } from './ReStart';
-import { BlackScene } from './Scene/BlackScene';
-import { CenterBlackScene } from './Scene/CenterBlackScene';
-import { SelectScene } from './Scene/SelectScene';
-import { TextScene } from './Scene/TextScene';
+import { BlackScene, CenterBlackScene, SelectScene, TextScene } from './Scene';
 
 interface GameBoardProps {
   script: Script;
@@ -48,6 +51,8 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
   const [background, setBackground] = useState<string | null>(null);
 
+  const [animation, setAnimation] = useState<AnimationState | null>(null);
+
   const end = next === null;
   const isSelect = Array.isArray(selectList) && selectList.length >= 1;
 
@@ -66,6 +71,9 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
     if (nextScript.background !== undefined)
       setBackground(nextScript.background);
+
+    setAnimation(null);
+    setTimeout(() => setAnimation(nextScript.animation ?? null), 10);
 
     if (Array.isArray(nextScript.next)) setSelectList(nextScript.next);
     else {
@@ -107,7 +115,13 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
   return (
     <GameboardContainer>
-      <BackgroundContainer>
+      <BackgroundContainer
+        className={
+          animation
+            ? `animate__animated animate__${animation} ${Math.random().toString()}`
+            : undefined
+        }
+      >
         {sceneState === 'default' ? (
           <TextScene
             background={background}

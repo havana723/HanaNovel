@@ -1,7 +1,8 @@
-import styled from "@emotion/styled";
-import { Gameboard } from "hana-novel";
-import "./App.css";
-import { script } from "./script/script";
+import styled from '@emotion/styled';
+import 'animate.css';
+import { Gameboard } from 'hana-novel';
+import './App.css';
+import { script } from './script/script';
 
 const Background = styled.div`
   height: 100%;
