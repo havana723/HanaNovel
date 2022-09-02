@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { AnimationState } from '../../../../../types';
 
 interface CharacterImgProps {
   characterImg: string[] | null;
+  characterAnimation: AnimationState[] | null;
 }
 
 const CharacterFlex = styled.div`
@@ -23,13 +25,22 @@ const CharacterContainter = styled.div`
 `;
 
 const CharacterImg: React.FC<CharacterImgProps> = (props) => {
-  const characterImg = props.characterImg;
+  const { characterImg, characterAnimation } = props;
 
   return (
     <CharacterFlex>
       {characterImg
         ? characterImg.map((c, i) => (
-            <CharacterContainter key={c + i}>
+            <CharacterContainter
+              className={
+                characterAnimation && characterAnimation[i]
+                  ? `animate__animated animate__${
+                      characterAnimation[i]
+                    } ${Math.random().toString()}`
+                  : undefined
+              }
+              key={c + i}
+            >
               <img
                 src={c}
                 style={{

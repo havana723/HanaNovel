@@ -1,4 +1,5 @@
 import React from 'react';
+import { AnimationState } from '../../../../types';
 import { CharacterImg } from './CharacterImg';
 import { CharacterName } from './CharacterName';
 import { TextBox } from './TextBox';
@@ -8,11 +9,19 @@ interface TextSceneProps {
   text: string | null;
   character: string | null;
   characterImg: string[] | null;
+  characterAnimation: AnimationState[] | null;
   onClick: () => void;
 }
 
 const TextScene: React.FC<TextSceneProps> = (props) => {
-  const { background, text, character, characterImg, onClick } = props;
+  const {
+    background,
+    text,
+    character,
+    characterImg,
+    characterAnimation,
+    onClick,
+  } = props;
 
   return (
     <>
@@ -23,7 +32,10 @@ const TextScene: React.FC<TextSceneProps> = (props) => {
           alt={background}
         />
       ) : null}
-      <CharacterImg characterImg={characterImg} />
+      <CharacterImg
+        characterImg={characterImg}
+        characterAnimation={characterAnimation}
+      />
       <TextBox text={text} onClick={onClick} />
       <CharacterName character={character} />
     </>

@@ -1,5 +1,5 @@
 export type SceneState = 'default' | 'black' | 'centerBlack' | 'select' | null;
-export type AnimationState = 'bounce' | 'shakeX' | 'shakeY' | 'wobble';
+export type AnimationState = 'bounce' | 'shakeX' | 'shakeY' | 'wobble' | null;
 export interface ISelection {
   text: string;
   next: string;
@@ -10,6 +10,7 @@ export interface Scene {
   addText?: boolean;
   sceneState?: SceneState;
   character?: string | null;
+  characterAnimation?: AnimationState[];
   characterImg?: string[];
   background?: string;
   animation?: AnimationState;

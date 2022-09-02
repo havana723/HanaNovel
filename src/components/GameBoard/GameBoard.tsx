@@ -44,6 +44,9 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
 
   const [character, setCharacter] = useState<string | null>(null);
   const [characterImg, setCharacterImg] = useState<string[] | null>(null);
+  const [characterAnimation, setCharacterAnimation] = useState<
+    AnimationState[] | null
+  >(null);
 
   const [selectList, setSelectList] = useState<ISelection[] | null>(null);
 
@@ -68,6 +71,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
     if (nextScript.character !== undefined) setCharacter(nextScript.character);
     if (nextScript.characterImg !== undefined)
       setCharacterImg(nextScript.characterImg);
+    setCharacterAnimation(nextScript.characterAnimation ?? null);
 
     if (nextScript.background !== undefined)
       setBackground(nextScript.background);
@@ -128,6 +132,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
             text={text}
             character={character}
             characterImg={characterImg}
+            characterAnimation={characterAnimation}
             onClick={() => changeScript(script.get(next ?? '') ?? null)}
           />
         ) : null}
