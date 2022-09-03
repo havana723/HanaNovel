@@ -63,22 +63,7 @@ export const SceneContextProvider: React.FC<{
       scene: Scene,
       prevScene: _Scene,
       next: string | ISelection[] | null
-    ): _Scene => {
-      const makeProperty = (propertyName: string) => {
-        return scene[propertyName] === undefined
-          ? resetVariables[propertyName] === undefined
-            ? prevScene[propertyName]
-            : resetVariables[propertyName]
-          : scene[propertyName];
-      };
-      return Object.fromEntries([
-        ...Object.entries(prevScene).map(([name]) => [
-          name,
-          makeProperty(name),
-        ]),
-        ['next', next],
-      ]);
-    };
+    ): _Scene => ({ ...prevScene, ...scene, ...resetVariables, next });
 
     const script = new Map<string, _Scene>();
 
