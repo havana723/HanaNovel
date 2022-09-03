@@ -1,11 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import { useSceneContext } from '../../../../contexts/SceneContext';
 import { TextRenderer } from '../../../TextRenderer';
-
-interface GameSceneProps {
-  text: string | null;
-  onClick: () => void;
-}
 
 const BlackCenterContainer = styled.div`
   position: absolute;
@@ -27,12 +23,13 @@ const BlackCenterTextBox = styled.div`
   text-align: center;
 `;
 
-const CenterBlackScene: React.FC<GameSceneProps> = (props) => {
-  const { onClick, text } = props;
+const CenterBlackScene: React.FC = () => {
+  const scene = useSceneContext();
+  const { text, changeScript } = scene;
 
   return (
     <>
-      <BlackCenterContainer onClick={onClick}>
+      <BlackCenterContainer onClick={() => changeScript()}>
         <BlackCenterTextBox>
           <TextRenderer text={text ?? ''} />
         </BlackCenterTextBox>

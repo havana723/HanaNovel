@@ -1,27 +1,19 @@
 import React from 'react';
-import { AnimationState } from '../../../../types';
+import { useSceneContext } from '../../../../contexts/SceneContext';
 import { CharacterImg } from './CharacterImg';
 import { CharacterName } from './CharacterName';
 import { TextBox } from './TextBox';
 
-interface TextSceneProps {
-  background: string | null;
-  text: string | null;
-  character: string | null;
-  characterImg: string[] | null;
-  characterAnimation: AnimationState[] | null;
-  onClick: () => void;
-}
-
-const TextScene: React.FC<TextSceneProps> = (props) => {
+const TextScene: React.FC = () => {
+  const scene = useSceneContext();
   const {
-    background,
     text,
     character,
-    characterImg,
     characterAnimation,
-    onClick,
-  } = props;
+    characterImg,
+    background,
+    changeScript,
+  } = scene;
 
   return (
     <>
@@ -36,7 +28,7 @@ const TextScene: React.FC<TextSceneProps> = (props) => {
         characterImg={characterImg}
         characterAnimation={characterAnimation}
       />
-      <TextBox text={text} onClick={onClick} />
+      <TextBox text={text} onClick={() => changeScript()} />
       <CharacterName character={character} />
     </>
   );

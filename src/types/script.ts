@@ -5,6 +5,13 @@ export interface ISelection {
   next: string;
 }
 
+export const resetVariables = {
+  addText: false,
+  characterAnimation: [],
+  animation: null,
+  next: null,
+};
+
 export interface Scene {
   text: string;
   addText?: boolean;

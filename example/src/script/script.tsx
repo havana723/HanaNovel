@@ -122,6 +122,7 @@ const chapter1_love: Episode = {
   scenes: [
     {
       text: '에라 모르겠다.',
+      sceneState: 'default',
       characterImg: [hanbyeol],
     },
     {
@@ -160,12 +161,10 @@ const chapter1_love: Episode = {
     {
       text: '역시 이건 너무 무리수였나?',
       addText: true,
-      sceneState: 'black',
     },
     {
       text: '빨리 아무 말이라도 해야... 어?',
       addText: true,
-      sceneState: 'black',
     },
     {
       text: '...사실 나도 전부터 널 좋아했어.',

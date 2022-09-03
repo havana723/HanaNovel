@@ -1,13 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { ISelection, _Scene } from '../../../../types';
+import { useSceneContext } from '../../../../contexts/SceneContext';
 import { SelectButton } from './SelectButton';
-
-interface SelectSceneProps {
-  selectList: ISelection[] | null;
-  script: Map<string, _Scene>;
-  changeScript: (script: _Scene | null) => void;
-}
 
 const SelectContainer = styled.div`
   height: 100%;
@@ -24,18 +18,19 @@ const SelectContainer = styled.div`
   justify-content: space-evenly;
 `;
 
-const SelectScene: React.FC<SelectSceneProps> = (props) => {
-  const { selectList, changeScript, script } = props;
+const SelectScene: React.FC = () => {
+  const scene = useSceneContext();
+  const { next, changeScript } = scene;
 
   return (
     <>
       <SelectContainer>
-        {selectList
-          ? selectList.map((s, i) => (
+        {Array.isArray(next)
+          ? next.map((s, i) => (
               <SelectButton
                 text={s.text}
                 key={s.text + i}
-                onClick={() => changeScript(script.get(s.next) ?? null)}
+                onClick={() => changeScript(i)}
               />
             ))
           : null}

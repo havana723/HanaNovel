@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-
-interface ReStartProps {
-  text: string;
-  onClick: () => void;
-}
+import { useSceneContext } from '../../../contexts/SceneContext';
 
 const ReStartFlex = styled.div`
   position: absolute;
@@ -34,14 +30,15 @@ const ButtonContainer = styled.button`
   }
 `;
 
-const ReStart: React.FC<ReStartProps> = (props) => {
-  const { text, onClick } = props;
+const ReStart: React.FC = () => {
+  const scene = useSceneContext();
+  const { startScene, changeScript } = scene;
 
   return (
     <>
       <ReStartFlex>
-        <ButtonContainer onClick={onClick}>
-          <span>{text}</span>
+        <ButtonContainer onClick={() => changeScript(0, startScene)}>
+          <span>다시 시작하기</span>
         </ButtonContainer>
       </ReStartFlex>
     </>
