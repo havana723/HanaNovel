@@ -6,6 +6,7 @@ import {
   Scene,
   SceneState,
   Script,
+  _Scene,
 } from '../../types';
 import { ReStart } from './ReStart';
 import { BlackScene, CenterBlackScene, SelectScene, TextScene } from './Scene';
@@ -59,7 +60,7 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   const end = next === null;
   const isSelect = Array.isArray(selectList) && selectList.length >= 1;
 
-  const changeScript = useCallback((nextScript: Scene | null) => {
+  const changeScript = useCallback((nextScript: _Scene | null) => {
     if (!nextScript) return;
 
     nextScript.addText
@@ -87,12 +88,51 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   }, []);
 
   const script = useMemo(() => {
-    const script = new Map<string, Scene>();
-    props.script.forEach((e) =>
-      e.forEach(([n, s]) =>
-        Array.isArray(s.text)
-          ? s.text.forEach((text) => script.set(n, { ...s, text: text }))
-          : script.set(n, s)
+    const makeSceneName = (episodeName: string, ei: number, si: number) => {
+      return si === 0 ? episodeName : '__' + ei + '_' + si;
+    };
+
+    const makeNextScene = (
+      nextEpisode: string | null,
+      ei: number,
+      si: number,
+      sceneLength: number
+    ): string | null => {
+      return si === sceneLength - 1 ? nextEpisode : '__' + ei + '_' + (si + 1);
+    };
+
+    const SceneTo_Scene = (
+      scene: Scene,
+      prevScene: _Scene,
+      next: string | null
+    ): _Scene => {
+      const makeProperty = (propertyName: string) => {
+        return scene[propertyName] === undefined
+          ? prevScene[propertyName]
+          : scene[propertyName];
+      };
+      const ret: _Scene = {} as _Scene;
+      ret.next = next;
+      Object.entries(scene)
+        .map(([name]) => [name, makeProperty(name)])
+        .forEach(([name, value]) => (ret[name] = value));
+      return ret;
+    };
+
+    const script = new Map<string, _Scene>();
+
+    let prevScene: _Scene = {} as _Scene;
+
+    props.script.forEach(({ episodeName, scenes, nextEpisode }, ei) =>
+      scenes.forEach((s, si) =>
+        script.set(
+          makeSceneName(episodeName, ei, si),
+          (prevScene = SceneTo_Scene(
+            s,
+            prevScene,
+            makeNextScene(nextEpisode, ei, si, scenes.length)
+          ))
+        )
       )
     );
     return script;

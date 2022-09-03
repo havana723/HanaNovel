@@ -14,9 +14,25 @@ export interface Scene {
   characterImg?: string[];
   background?: string;
   animation?: AnimationState;
+  next?: string | ISelection[] | null;
+}
+
+export interface _Scene {
+  text: string;
+  addText: boolean;
+  sceneState: SceneState;
+  character: string | null;
+  characterAnimation: AnimationState[];
+  characterImg: string[];
+  background: string;
+  animation: AnimationState;
   next: string | ISelection[] | null;
 }
 
-export type Episode = [string, Scene][];
+export type Episode = {
+  episodeName: string;
+  scenes: Scene[];
+  nextEpisode: string | null;
+};
 
 export type Script = Episode[];

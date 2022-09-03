@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { ISelection, Scene } from '../../../../types';
+import { ISelection, _Scene } from '../../../../types';
 import { SelectButton } from './SelectButton';
 
 interface SelectSceneProps {
   selectList: ISelection[] | null;
-  script: Map<string, Scene>;
-  changeScript: (script: Scene | null) => void;
+  script: Map<string, _Scene>;
+  changeScript: (script: _Scene | null) => void;
 }
 
 const SelectContainer = styled.div`
