@@ -88,18 +88,16 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
   }, []);
 
   const script = useMemo(() => {
-    const makeSceneName = (episodeName: string, ei: number, si: number) => {
-      return si === 0 ? episodeName : '__' + ei + '_' + si;
-    };
+    const makeSceneName = (episodeName: string, ei: number, si: number) =>
+      si === 0 ? episodeName : '__' + ei + '_' + si;
 
     const makeNextScene = (
       nextEpisode: string | null,
       ei: number,
       si: number,
       sceneLength: number
-    ): string | null => {
-      return si === sceneLength - 1 ? nextEpisode : '__' + ei + '_' + (si + 1);
-    };
+    ): string | null =>
+      si === sceneLength - 1 ? nextEpisode : '__' + ei + '_' + (si + 1);
 
     const SceneTo_Scene = (
       scene: Scene,
@@ -111,12 +109,10 @@ const Gameboard: React.FC<GameBoardProps> = (props) => {
           ? prevScene[propertyName]
           : scene[propertyName];
       };
-      const ret: _Scene = {} as _Scene;
-      ret.next = next;
-      Object.entries(scene)
-        .map(([name]) => [name, makeProperty(name)])
-        .forEach(([name, value]) => (ret[name] = value));
-      return ret;
+      return Object.fromEntries([
+        ['next', next],
+        ...Object.entries(scene).map(([name]) => [name, makeProperty(name)]),
+      ]);
     };
 
     const script = new Map<string, _Scene>();
