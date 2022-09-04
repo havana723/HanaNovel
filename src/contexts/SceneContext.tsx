@@ -63,7 +63,7 @@ export const SceneContextProvider: React.FC<{
       scene: Scene,
       prevScene: _Scene,
       next: string | ISelection[] | null
-    ): _Scene => ({ ...prevScene, ...scene, ...resetVariables, next });
+    ): _Scene => ({ ...prevScene, ...resetVariables, ...scene, next });
 
     const script = new Map<string, _Scene>();
 
@@ -113,6 +113,8 @@ export const SceneContextProvider: React.FC<{
           10
         );
         setCharacterImg(nextScript.characterImg);
+
+        console.log(characterAnimation);
 
         setBackground(nextScript.background);
 
