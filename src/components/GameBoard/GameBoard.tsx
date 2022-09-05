@@ -6,7 +6,13 @@ import {
 } from '../../contexts/SceneContext';
 import { Script } from '../../types';
 import { ReStart } from './ReStart';
-import { BlackScene, CenterBlackScene, SelectScene, TextScene } from './Scene';
+import {
+  BlackScene,
+  CenterBlackScene,
+  FullScreenScene,
+  SelectScene,
+  TextScene,
+} from './Scene';
 
 interface GameboardProps {
   script: Script;
@@ -74,6 +80,7 @@ const GameboardElement: React.FC = () => {
         {sceneState === 'default' ? <TextScene /> : null}
         {sceneState === 'black' ? <BlackScene /> : null}
         {sceneState === 'centerBlack' ? <CenterBlackScene /> : null}
+        {sceneState === 'fullScreen' ? <FullScreenScene /> : null}
         {isSelect ? <SelectScene /> : null}
         {end ? <ReStart /> : null}
       </BackgroundContainer>

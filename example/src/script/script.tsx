@@ -1,5 +1,6 @@
 import { Episode } from '../../../dist';
 import backgroundHotel from '.././img/background-hotel.jpg';
+import fullCG from '.././img/fullCG.png';
 import hanbyeol1 from '.././img/hanbyeol-1.png';
 import hanbyeol from '.././img/hanbyeol.png';
 
@@ -210,6 +211,11 @@ const chapter1_love: Episode = {
     {
       text: '그렇게 오랜 연애 끝에 한별이는 사랑의 결실을 맺게 되었고 화창한 어느 4월의 봄날, 아름다운 신부가 되어 하객들을 맞이했다.',
       addText: true,
+    },
+    {
+      text: '',
+      sceneState: 'fullScreen',
+      background: fullCG,
     },
     {
       text: 'HAPPY END ~4월의 신부~',
